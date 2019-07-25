@@ -2,6 +2,7 @@
 
 namespace App\Repositories\File;
 
+use App\Repositories\File\Abstraction\AbstractFileRepository;
 use App\Repositories\Interfaces\RestaurantRepositoryInterface;
 
 /**
@@ -11,7 +12,7 @@ use App\Repositories\Interfaces\RestaurantRepositoryInterface;
 class FileRestaurantRepository extends AbstractFileRepository implements RestaurantRepositoryInterface
 {
 
-    public function findMany($criteria, $perPage, $page, $select, $sort)
+    public function findMany($criteria = [], $perPage = 10, $page = 1, $select = '*', $sort = [])
     {
         dd($this->dataSource);
     }

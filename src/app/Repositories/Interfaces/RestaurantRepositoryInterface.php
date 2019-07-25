@@ -9,5 +9,5 @@ namespace App\Repositories\Interfaces;
  */
 interface RestaurantRepositoryInterface
 {
-    public function findMany($criteria, $perPage, $page, $select, $sort);
+    public function findMany($criteria = [], $perPage = 10, $page = 1, $select = '*', $sort = []);
 }

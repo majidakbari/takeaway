@@ -1,4 +1,8 @@
 <?php
-Route::get('/', function (){
-   return response()->json(['hi' => 1]);
+
+## --------------------------------------------------
+## | Restaurant Routes
+## --------------------------------------------------
+Route::group(['namespace' => 'Restaurant', 'as' => 'restaurant.', 'prefix' => 'restaurant'], function (){
+    Route::get('/', 'ListRestaurantsAction')->name('index');
 });
