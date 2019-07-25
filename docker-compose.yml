@@ -1,0 +1,24 @@
+version: '3.5'
+
+services:
+
+  ## --------------------------------------------------
+  ## | Web Server Php7.3.5-apache and required Extensions
+  ## --------------------------------------------------
+  app:
+    build:
+      context: ./.docker-compose/app
+      dockerfile: Dockerfile
+      args:
+        - WWW_DATA_USER_ID=${WWW_DATA_USER_ID}
+    volumes:
+      - ./src:/var/www/
+      - ./.docker-compose/app/config/php.ini:/usr/local/etc/php/php.ini
+    environment:
+      - WWW_DATA_USER_ID=${WWW_DATA_USER_ID}
+      - EXCLUDE_PORTS=443
+    ports:
+      - "127.0.0.1:9090:80"
+    restart: always
+    env_file:
+      - .env
