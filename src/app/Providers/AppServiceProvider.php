@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Entities\Restaurant;
 use App\Repositories\File\FileRestaurantRepository;
 use App\Repositories\Interfaces\RestaurantRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -41,7 +42,10 @@ class AppServiceProvider extends ServiceProvider
     private function bindImplementations(): void
     {
         $this->app->bind(RestaurantRepositoryInterface::class, function () {
-            return new FileRestaurantRepository(json_decode(file_get_contents(storage_path('data/restaurants.json')), true));
+            return new FileRestaurantRepository(
+                json_decode(file_get_contents(storage_path('data/restaurants.json')), true),
+                Restaurant::class
+            );
         });
     }
 }

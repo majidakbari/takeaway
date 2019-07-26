@@ -2,6 +2,7 @@
 
 namespace App\Repositories\File\Abstraction;
 
+use App\Entities\Interfaces\EntityInterface;
 use Illuminate\Support\Collection;
 
 /**
@@ -19,9 +20,14 @@ class AbstractFileRepository
     /**
      * AbstractFileRepository constructor.
      * @param array $data
+     * @param EntityInterface|string $entity
      */
-    public function __construct($data)
+    public function __construct(array $data, $entity)
     {
+        $data = array_map(function ($element) use ($entity){
+            return $entity::fromArray($element);
+        }, $data);
+
         $this->dataSource = new Collection($data);
     }
 }

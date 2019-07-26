@@ -3,11 +3,19 @@
 namespace App\Repositories\Interfaces;
 
 
+use Illuminate\Support\Collection;
+
 /**
  * Interface RestaurantRepositoryInterface
  * @package App\Repositories\Interfaces
  */
 interface RestaurantRepositoryInterface
 {
-    public function findMany($criteria = [], $perPage = 10, $page = 1, $select = '*', $sort = []);
+    /**
+     * @param string $search
+     * @param string $sort
+     * @param string $sortingValue
+     * @return array
+     */
+    public function findMany($search, $sort, $sortingValue);
 }
