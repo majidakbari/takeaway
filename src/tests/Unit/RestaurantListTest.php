@@ -2,15 +2,14 @@
 
 namespace Tests\Unit;
 
-use App\Entities\Asset;
-use App\Repositories\Interfaces\AssetRepositoryInterface;
+use App\Repositories\Interfaces\RestaurantRepositoryInterface;
 use Tests\TestCase;
 
 /**
  * Class FindAdminAssetsTest
  * @package Tests\Unit
  */
-class FindAdminAssetsTest extends TestCase
+class RestaurantListTest extends TestCase
 {
     /*
     |--------------------------------------------------------------------------
@@ -31,13 +30,13 @@ class FindAdminAssetsTest extends TestCase
      */
     public function testExample()
     {
-        /** @var AssetRepositoryInterface $assetRepository */
-        $assetRepository = resolve(AssetRepositoryInterface::class);
+        /** @var RestaurantRepositoryInterface $repo */
+        $repo = resolve(RestaurantRepositoryInterface::class);
 
-        $assets = $assetRepository->findManyByCriteria(['is_admin' => true]);
+        $restaurants = $repo->findMany('', '', '');
 
         $this->assertCount(
-            Asset::query()->count(), $assets
+            count(json_decode(file_get_contents(storage_path('data/restaurants.json')), true)), $restaurants
         );
     }
 }
