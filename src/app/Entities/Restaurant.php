@@ -23,7 +23,7 @@ class Restaurant extends AbstractEntity implements EntityInterface
 
 
     //sorting values
-
+    //this property could be an object (a class containing all these values, but unfortunately there is no time)
     const SORTING_VALUE_NEWEST = 'newest';
 
     const SORTING_VALUE_BEST_MATCH = 'bestMatch';
