@@ -3,6 +3,7 @@
 namespace App\Repositories\Interfaces;
 
 use App\Entities\UserFavoriteRestaurant;
+use Illuminate\Support\Collection;
 
 /**
  * Interface UserFavoriteRestaurantRepositoryInterface
@@ -13,7 +14,7 @@ interface UserFavoriteRestaurantRepositoryInterface
 
     /**
      * @param string $username
-     * @return UserFavoriteRestaurant
+     * @return Collection
      */
     public function findMyFavoriteRestaurants($username);
 

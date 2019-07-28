@@ -19,12 +19,11 @@ class FileRestaurantRepository extends AbstractFileRepository implements Restaur
      * @param string $search
      * @param string $sort
      * @param string $sortingValue
+     * @param null|array $favorite
      * @return array
      */
-    public function findMany($search, $sort, $sortingValue)
+    public function findMany($search, $sort, $sortingValue, $favorite = null)
     {
-        $result = [];
-
         $data = $this->getDataSource();
 
         if (!empty($search)) {
@@ -34,21 +33,29 @@ class FileRestaurantRepository extends AbstractFileRepository implements Restaur
             });
         }
 
-        $data = $data->sortby(function (Restaurant $record) use ($sort, $sortingValue) {
-            return array_search($record->status, Restaurant::getSortOrder($sort));
+        $data = $data->groupBy(function(Restaurant $record) use ($favorite){
+            return in_array($record->getName(), $favorite);
         });
 
-        $data = array_map(function (Collection $item) use ($sortingValue){
-            return $item->sortByDesc("sortingValues.$sortingValue");
-        }, $data->groupBy('status')->all());
+        $data = array_map(function (Collection $item) use ($sort){
+            return $item->sortBy(function(Restaurant $record) use ($sort) {
+                return array_search($record->status, Restaurant::getSortOrder($sort));
+            });
+        }, $data->all());
 
-        if (!empty($data)) {
-            /** @var Collection $value */
-            foreach ($data as $value)
-            $result = array_merge($result, $value->all());
-        }
+        $data = array_map(function(Collection $item) {
+            return $item->groupBy('status');
+        }, $data);
 
-        return $result;
+        $data = array_map(function (Collection $element) use ($sortingValue) {
+            return array_map(function ($item) use ($sortingValue){
+                return $item->sortByDesc("sortingValues.$sortingValue");
+            }, $element->all());
+
+        }, $data);
+
+
+        return collection_to_array($data);
     }
 
     /**

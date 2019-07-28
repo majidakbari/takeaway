@@ -6,6 +6,7 @@ use App\Entities\UserFavoriteRestaurant;
 use App\Repositories\File\Abstraction\AbstractFileRepository;
 use App\Repositories\Interfaces\UserFavoriteRestaurantRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Collection;
 
 /**
  * Class FileUserFavoriteRestaurantRepository
@@ -16,11 +17,11 @@ class FileUserFavoriteRestaurantRepository extends AbstractFileRepository implem
 
     /**
      * @param string $username
-     * @return UserFavoriteRestaurant
+     * @return Collection
      */
     public function findMyFavoriteRestaurants($username)
     {
-        // TODO: Implement findMyFavoriteRestaurants() method.
+        return $this->getDataSource()->where('username', $username);
     }
 
     /**

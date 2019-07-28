@@ -40,6 +40,8 @@ class Restaurant extends AbstractEntity implements EntityInterface
 
     const SORTING_VALUE_MIN_COST = 'minCost';
 
+    const SORTING_VALUE_TOP_RESTAURANTS = 'topRestaurants';
+
     /**
      * @var string
      */
@@ -67,6 +69,17 @@ class Restaurant extends AbstractEntity implements EntityInterface
         $this->name = $name;
         $this->status = $status;
         $this->sortingValues = $sortingValues;
+        $this->appendTopRestaurantAttribute();
+    }
+
+
+    /**
+     * This field will append top restaurant attribute to the sortingValues
+     */
+    private function appendTopRestaurantAttribute()
+    {
+        $this->sortingValues['topRestaurants'] =
+            ($this->sortingValues['distance'] * $this->sortingValues['popularity']) + $this->sortingValues['ratingAverage'];
     }
 
 
@@ -110,7 +123,8 @@ class Restaurant extends AbstractEntity implements EntityInterface
             self::SORTING_VALUE_POPULARITY,
             self::SORTING_VALUE_AVERAGE_PRODUCT_PRICE,
             self::SORTING_VALUE_DELIVERY_COSTS,
-            self::SORTING_VALUE_MIN_COST
+            self::SORTING_VALUE_MIN_COST,
+            self::SORTING_VALUE_TOP_RESTAURANTS
         ];
     }
 

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Restaurant;
 
 use App\Entities\Restaurant;
+use App\Entities\User;
 use App\Repositories\Interfaces\RestaurantRepositoryInterface;
+use App\Repositories\Interfaces\UserFavoriteRestaurantRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Factory;
 use Illuminate\Validation\Rule;
@@ -24,19 +26,26 @@ class ListRestaurantsAction
      * @var Factory
      */
     private $validationFactory;
+    /**
+     * @var UserFavoriteRestaurantRepositoryInterface
+     */
+    private $userFavoriteRestaurantRepository;
 
     /**
      * ListRestaurantsAction constructor.
      * @param RestaurantRepositoryInterface $restaurantRepository
      * @param Factory $validationFactory
+     * @param UserFavoriteRestaurantRepositoryInterface $userFavoriteRestaurantRepository
      */
     public function __construct(
         RestaurantRepositoryInterface $restaurantRepository,
-        Factory $validationFactory
+        Factory $validationFactory,
+        UserFavoriteRestaurantRepositoryInterface $userFavoriteRestaurantRepository
     )
     {
         $this->restaurantRepository = $restaurantRepository;
         $this->validationFactory = $validationFactory;
+        $this->userFavoriteRestaurantRepository = $userFavoriteRestaurantRepository;
     }
 
     /**
@@ -52,7 +61,8 @@ class ListRestaurantsAction
             'data' => $this->restaurantRepository->findMany(
                 $request->get('search'),
                 $request->get('sort'),
-                $request->get('sorting_value')
+                $request->get('sorting_value'),
+                $this->userFavoriteRestaurantRepository->findMyFavoriteRestaurants(User::USERNAME)->pluck('restaurantName')->all()
             )
         ]);
     }
