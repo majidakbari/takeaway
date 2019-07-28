@@ -3,8 +3,11 @@
 namespace App\Providers;
 
 use App\Entities\Restaurant;
+use App\Entities\UserFavoriteRestaurant;
 use App\Repositories\File\FileRestaurantRepository;
+use App\Repositories\File\FileUserFavoriteRestaurantRepository;
 use App\Repositories\Interfaces\RestaurantRepositoryInterface;
+use App\Repositories\Interfaces\UserFavoriteRestaurantRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -43,8 +46,13 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(RestaurantRepositoryInterface::class, function () {
             return new FileRestaurantRepository(
-                json_decode(file_get_contents(storage_path('data/restaurants.json')), true),
-                Restaurant::class
+                storage_path('data/restaurants.json'), Restaurant::class
+            );
+        });
+
+        $this->app->bind(UserFavoriteRestaurantRepositoryInterface::class, function () {
+            return new FileUserFavoriteRestaurantRepository(
+                storage_path('data/user_favorite_restaurants.json'), UserFavoriteRestaurant::class
             );
         });
     }

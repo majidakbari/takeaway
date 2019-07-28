@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Entities\Abstraction\AbstractEntity;
 use App\Entities\Interfaces\EntityInterface;
 
 /**
@@ -11,7 +12,7 @@ use App\Entities\Interfaces\EntityInterface;
  * @property array $sortingValues
  * @package App\Entities
  */
-class Restaurant implements EntityInterface
+class Restaurant extends AbstractEntity implements EntityInterface
 {
     //statuses
     const STATUS_OPEN = 'open';
@@ -72,7 +73,7 @@ class Restaurant implements EntityInterface
     /**
      * Factory design pattern
      * @param array $options
-     * @return Restaurant
+     * @return $this
      */
     public static function fromArray($options)
     {
@@ -134,6 +135,22 @@ class Restaurant implements EntityInterface
         }
 
         return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
     }
 }
 

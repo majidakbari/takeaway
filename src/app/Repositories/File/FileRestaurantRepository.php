@@ -5,6 +5,7 @@ namespace App\Repositories\File;
 use App\Entities\Restaurant;
 use App\Repositories\File\Abstraction\AbstractFileRepository;
 use App\Repositories\Interfaces\RestaurantRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 /**
@@ -24,7 +25,7 @@ class FileRestaurantRepository extends AbstractFileRepository implements Restaur
     {
         $result = [];
 
-        $data = $this->dataSource;
+        $data = $this->getDataSource();
 
         if (!empty($search)) {
             //performing a like query in the collection
@@ -48,5 +49,20 @@ class FileRestaurantRepository extends AbstractFileRepository implements Restaur
         }
 
         return $result;
+    }
+
+    /**
+     * @param $name
+     * @return Restaurant
+     */
+    public function findByName($name)
+    {
+        $data = $this->getDataSource()->where('name', $name);
+
+        if ($data->isNotEmpty()) {
+            return $data->first();
+        }
+
+        throw new ModelNotFoundException();
     }
 }

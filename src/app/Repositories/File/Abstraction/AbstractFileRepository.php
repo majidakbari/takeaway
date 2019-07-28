@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
  * Class AbstractFileRepository
  * @package App\Repositories\File
  */
-class AbstractFileRepository
+Abstract class AbstractFileRepository
 {
     /**
      * @var Collection
@@ -18,16 +18,50 @@ class AbstractFileRepository
 
 
     /**
+     * @var string
+     */
+    protected $filePath;
+
+
+    /**
      * AbstractFileRepository constructor.
-     * @param array $data
+     * @param string $filePath
      * @param EntityInterface|string $entity
      */
-    public function __construct(array $data, $entity)
+    public function __construct($filePath, $entity)
     {
-        $data = array_map(function ($element) use ($entity){
+        $this->filePath = $filePath;
+
+        $data = json_decode(file_get_contents($filePath), true);
+
+        $data = array_map(function ($element) use ($entity) {
             return $entity::fromArray($element);
-        }, $data);
+        }, $data ?? []);
 
         $this->dataSource = new Collection($data);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getDataSource(): Collection
+    {
+        return $this->dataSource;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilePath(): string
+    {
+        return $this->filePath;
+    }
+
+    /**
+     * @return void
+     */
+    public function persist()
+    {
+        file_put_contents($this->getFilePath(), json_encode($this->getDataSource()->all()));
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Repositories\Interfaces;
 
 
-use Illuminate\Support\Collection;
+use App\Entities\Restaurant;
 
 /**
  * Interface RestaurantRepositoryInterface
@@ -18,4 +18,10 @@ interface RestaurantRepositoryInterface
      * @return array
      */
     public function findMany($search, $sort, $sortingValue);
+
+    /**
+     * @param $name
+     * @return Restaurant
+     */
+    public function findByName($name);
 }
