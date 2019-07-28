@@ -33,6 +33,15 @@ class FileRestaurantRepository extends AbstractFileRepository implements Restaur
             });
         }
 
+        if ($data->isNotEmpty() && !empty($favorite)) {
+            /** @var Restaurant $restaurant */
+            foreach ($data as $restaurant) {
+                if (in_array($restaurant->getName(), $favorite)) {
+                    $restaurant->setIsFavorite(true);
+                }
+            }
+        }
+
         $data = $data->groupBy(function(Restaurant $record) use ($favorite){
             return in_array($record->getName(), $favorite);
         });

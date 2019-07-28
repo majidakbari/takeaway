@@ -59,16 +59,24 @@ class Restaurant extends AbstractEntity implements EntityInterface
 
 
     /**
+     * @var bool
+     */
+    public $isFavorite;
+
+
+    /**
      * Restaurant constructor.
      * @param $name
      * @param $status
      * @param $sortingValues
+     * @param $isFavorite
      */
-    public function __construct($name, $status, $sortingValues)
+    public function __construct($name, $status, $sortingValues, $isFavorite)
     {
         $this->name = $name;
         $this->status = $status;
         $this->sortingValues = $sortingValues;
+        $this->isFavorite = $isFavorite;
         $this->appendTopRestaurantAttribute();
     }
 
@@ -94,6 +102,7 @@ class Restaurant extends AbstractEntity implements EntityInterface
             $options['name'] ?? '',
             $options['status'] ?? '',
             $options['sortingValues'] ?? [],
+            $options['isFavorite'] ?? false
         );
     }
 
@@ -165,6 +174,22 @@ class Restaurant extends AbstractEntity implements EntityInterface
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFavorite(): bool
+    {
+        return $this->isFavorite;
+    }
+
+    /**
+     * @param bool $isFavorite
+     */
+    public function setIsFavorite(bool $isFavorite): void
+    {
+        $this->isFavorite = $isFavorite;
     }
 }
 
