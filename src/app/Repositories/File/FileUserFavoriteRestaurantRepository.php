@@ -41,7 +41,8 @@ class FileUserFavoriteRestaurantRepository extends AbstractFileRepository implem
      */
     public function delete(UserFavoriteRestaurant $userFavoriteRestaurant)
     {
-        // TODO: Implement delete() method.
+        $this->getDataSource()->pull($this->findId($userFavoriteRestaurant));
+        $this->persist();
     }
 
     /**
@@ -72,5 +73,24 @@ class FileUserFavoriteRestaurantRepository extends AbstractFileRepository implem
         }
 
         return $result;
+    }
+
+    /**
+     * @param UserFavoriteRestaurant $userFavoriteRestaurant
+     * @return int|null
+     */
+    private function findId(UserFavoriteRestaurant $userFavoriteRestaurant)
+    {
+        $result = $this->getDataSource()
+            ->where('username', $userFavoriteRestaurant->getUsername())
+            ->where('restaurantName', $userFavoriteRestaurant->getRestaurantName());
+
+        if ($result->isNotEmpty()) {
+            list($id) = array_keys($result->all());
+
+            return $id;
+        }
+
+        return null;
     }
 }

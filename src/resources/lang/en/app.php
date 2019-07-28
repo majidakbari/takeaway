@@ -11,5 +11,6 @@ return [
     'ModelNotFoundException' => 'Not found',
     'too_many_attempts' => 'Too many attempts',
     'RestaurantAlreadyIsFavoriteException' => 'This restaurant is already in your favorite list',
+    'RestaurantIsNotFavoriteException' => 'This restaurant is not in your favorite list'
 
 ];

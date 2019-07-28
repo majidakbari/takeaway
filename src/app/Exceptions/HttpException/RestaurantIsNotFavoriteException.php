@@ -3,20 +3,20 @@
 namespace App\Exceptions\HttpException;
 
 /**
- * Class RestaurantAlreadyIsFavoriteException
+ * Class RestaurantIsNotFavoriteException
  * @package App\Exceptions\HttpException
  */
-class RestaurantAlreadyIsFavoriteException extends HttpException
+class RestaurantIsNotFavoriteException extends HttpException
 {
     /**
-     * RestaurantAlreadyIsFavoriteException constructor.
+     * RestaurantIsNotFavoriteException constructor.
      */
     public function __construct()
     {
         parent::__construct(
-            1001,
+            1002,
             get_class_name($this),
-            trans('app.RestaurantAlreadyIsFavoriteException'),
+            trans('app.RestaurantIsNotFavoriteException'),
             400
         );
     }

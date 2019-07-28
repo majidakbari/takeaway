@@ -38,6 +38,10 @@ class FavoriteRestaurantAction
         $this->userFavoriteRestaurantRepository = $userFavoriteRestaurantRepository;
     }
 
+    /**
+     * @param $name
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function __invoke($name)
     {
         $restaurant = $this->restaurantRepository->findByName($name);

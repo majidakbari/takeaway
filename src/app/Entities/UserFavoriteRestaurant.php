@@ -49,5 +49,21 @@ class UserFavoriteRestaurant extends AbstractEntity implements EntityInterface
             $options['username'] ?? ''
         );
     }
+
+    /**
+     * @return string
+     */
+    public function getRestaurantName(): string
+    {
+        return $this->restaurantName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
 }
 
