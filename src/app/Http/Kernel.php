@@ -44,6 +44,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             \App\Http\Middleware\OnlyJsonResponse::class,
+            \Barryvdh\Cors\HandleCors::class,
             'throttle:60,1',
             'bindings',
         ],

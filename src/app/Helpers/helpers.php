@@ -21,3 +21,15 @@ if (!function_exists('collection_to_array')) {
         return $result;
     }
 }
+
+if (!function_exists('iterate_array')) {
+    function iterate_array($array) {
+        $result = [];
+
+        foreach ($array as $value) {
+            $result[$value] = ucfirst($value);
+        }
+
+        return $result;
+    }
+}

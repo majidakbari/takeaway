@@ -16,10 +16,10 @@ class OnlyJsonResponse
      */
     public function handle($request, Closure $next)
     {
-        if (!in_array($request->header('accept'), ['*/*', 'application/json'])){
-            throw new InvalidAcceptHeaderException();
-        }
-        $request->headers->set('Accept', 'application/json');
+//        if (!in_array($request->header('accept'), ['*/*', 'application/json'])){
+//            throw new InvalidAcceptHeaderException();
+//        }
+//        $request->headers->set('Accept', 'application/json');
 
         return $next($request);
     }

@@ -12,6 +12,11 @@ if [ ! -f /var/www/.env ];
     cp /var/www/.env.example /var/www/.env
 fi
 
+printf "\033[0;32m > Generating app key ...\n"
+
+(cd /var/www/ && php artisan key:generate)
+
+
 chown www-data:www-data .env
 chmod -Rf +w storage/logs
 chmod -Rf +w bootstrap/cache
