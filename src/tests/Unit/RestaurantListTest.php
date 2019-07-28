@@ -33,7 +33,7 @@ class RestaurantListTest extends TestCase
         /** @var RestaurantRepositoryInterface $repo */
         $repo = resolve(RestaurantRepositoryInterface::class);
 
-        $restaurants = $repo->findMany('', '', '');
+        $restaurants = $repo->findMany('', '', '', []);
 
         $this->assertCount(
             count(json_decode(file_get_contents(storage_path('data/restaurants.json')), true)), $restaurants
