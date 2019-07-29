@@ -10,10 +10,11 @@
 .spinner {
     display: inline-block;
     position: relative;
-    width: 24px;
+    width: 0;
     height: 24px;
     vertical-align: middle;
-    margin: 0 0 0 10px;
+    margin: 0;
+    overflow: hidden;
 
     span {
         display: none;
@@ -28,6 +29,8 @@
     }
 
     &.show {
+        width: 24px;
+        margin: 0 0 0 10px;
 
         span {
             display: block;

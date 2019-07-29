@@ -22,7 +22,7 @@
 
         <script type="text/javascript">
             window.__ENV__ = {
-                base_url: '{{ env('BASE_URL') }}',
+                base_url: '{{ env('HTTP_BACKEND_ADDRESS') }}',
                 http_timeout: '{{ env('HTTP_TIMEOUT') }}'
             };
         </script>

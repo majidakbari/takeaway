@@ -22,7 +22,7 @@ vim .env
 
 
 ### Running the containers
-Open the terminal and type the following command:
+On the terminal and type the following command:
 ```bash
 docker-compose up -d 
 ```

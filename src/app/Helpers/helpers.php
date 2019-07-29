@@ -27,7 +27,7 @@ if (!function_exists('iterate_array')) {
         $result = [];
 
         foreach ($array as $value) {
-            $result[$value] = ucfirst($value);
+            $result[$value] = ucfirst(str_replace('_', ' ', \Illuminate\Support\Str::snake($value)));
         }
 
         return $result;

@@ -49,6 +49,10 @@
                 {{status[row.item.status]}}
             </template>
 
+            <template slot="details" slot-scope="row">
+                {{sorting_value ? row.item.sortingValues[sorting_value] : null}}
+            </template>
+
             <template slot="actions" slot-scope="row">
                 <img
                     class="action-icon"
@@ -99,7 +103,16 @@
                 doing: '',
                 loading: false,
                 items: [],
-                fields: [
+                icon: {
+                    empty: emptyStar,
+                    filled: star,
+                },
+            }
+        },
+        computed: {
+            fields() {
+                const self = this;
+                return [
                     {
                         key: 'name',
                         label: 'Restaurant Name',
@@ -107,16 +120,19 @@
                     {
                         key: 'status',
                         label: 'Status',
+                        class: 'text-center',
                     },
+                    ...(self.sorting_value ? [{
+                        key: 'details',
+                        class: 'text-center',
+                        label: self.sorting_value ? self.sortValues[self.sorting_value] : 'Details',
+                    }] : []),
                     {
                         key: 'actions',
-                        label: 'Actions'
-                    }
-                ],
-                icon: {
-                    empty: emptyStar,
-                    filled: star,
-                },
+                        label: 'Actions',
+                        class: 'text-center',
+                    },
+                ]
             }
         },
         mounted() {
@@ -124,6 +140,7 @@
         },
         methods: {
             fetchList() {
+                this.loading = true;
                 const params = this.getParams();
                 restaurant.list({params})
                     .then((response) => {
@@ -141,7 +158,7 @@
                 const {
                     search,
                     sort,
-                    sorting_values,
+                    sorting_value,
                 } = this;
                 if (search) {
                     params.search = search;
@@ -149,14 +166,13 @@
                 if (sort) {
                     params.sort = sort;
                 }
-                if (sorting_values) {
-                    params.sorting_values = sorting_values;
+                if (sorting_value) {
+                    params.sorting_value = sorting_value;
                 }
                 return params;
             },
             getList() {
                 if (!this.loading) {
-                    this.loading = true;
                     this.fetchList();
                 }
             },

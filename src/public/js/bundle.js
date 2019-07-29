@@ -1865,6 +1865,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_star_svg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_assets_star_svg__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _assets_empty_star_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../assets/empty-star.svg */ "./resources/js/assets/empty-star.svg");
 /* harmony import */ var _assets_empty_star_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_assets_empty_star_svg__WEBPACK_IMPORTED_MODULE_2__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+//
+//
+//
+//
 //
 //
 //
@@ -1964,21 +1976,32 @@ __webpack_require__.r(__webpack_exports__);
       doing: '',
       loading: false,
       items: [],
-      fields: [{
-        key: 'name',
-        label: 'Restaurant Name'
-      }, {
-        key: 'status',
-        label: 'Status'
-      }, {
-        key: 'actions',
-        label: 'Actions'
-      }],
       icon: {
         empty: _assets_empty_star_svg__WEBPACK_IMPORTED_MODULE_2___default.a,
         filled: _assets_star_svg__WEBPACK_IMPORTED_MODULE_1___default.a
       }
     };
+  },
+  computed: {
+    fields: function fields() {
+      var self = this;
+      return [{
+        key: 'name',
+        label: 'Restaurant Name'
+      }, {
+        key: 'status',
+        label: 'Status',
+        class: 'text-center'
+      }].concat(_toConsumableArray(self.sorting_value ? [{
+        key: 'details',
+        class: 'text-center',
+        label: self.sorting_value ? self.sortValues[self.sorting_value] : 'Details'
+      }] : []), [{
+        key: 'actions',
+        label: 'Actions',
+        class: 'text-center'
+      }]);
+    }
   },
   mounted: function mounted() {
     this.getList();
@@ -1987,6 +2010,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchList: function fetchList() {
       var _this = this;
 
+      this.loading = true;
       var params = this.getParams();
       _api__WEBPACK_IMPORTED_MODULE_0__["restaurant"].list({
         params: params
@@ -2003,7 +2027,7 @@ __webpack_require__.r(__webpack_exports__);
       var params = {};
       var search = this.search,
           sort = this.sort,
-          sorting_values = this.sorting_values;
+          sorting_value = this.sorting_value;
 
       if (search) {
         params.search = search;
@@ -2013,15 +2037,14 @@ __webpack_require__.r(__webpack_exports__);
         params.sort = sort;
       }
 
-      if (sorting_values) {
-        params.sorting_values = sorting_values;
+      if (sorting_value) {
+        params.sorting_value = sorting_value;
       }
 
       return params;
     },
     getList: function getList() {
       if (!this.loading) {
-        this.loading = true;
         this.fetchList();
       }
     },
@@ -33701,6 +33724,22 @@ var render = function() {
                 _vm._v(
                   "\n            " +
                     _vm._s(_vm.status[row.item.status]) +
+                    "\n        "
+                )
+              ]
+            }
+          },
+          {
+            key: "details",
+            fn: function(row) {
+              return [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(
+                      _vm.sorting_value
+                        ? row.item.sortingValues[_vm.sorting_value]
+                        : null
+                    ) +
                     "\n        "
                 )
               ]
