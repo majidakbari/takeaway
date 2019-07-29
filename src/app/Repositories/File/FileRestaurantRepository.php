@@ -42,9 +42,7 @@ class FileRestaurantRepository extends AbstractFileRepository implements Restaur
             }
         }
 
-        $data = $data->groupBy(function(Restaurant $record) use ($favorite){
-            return in_array($record->getName(), $favorite);
-        });
+        $data = $data->groupBy('isFavorite')->sortKeysDesc();
 
         $data = array_map(function (Collection $item) use ($sort){
             return $item->sortBy(function(Restaurant $record) use ($sort) {
