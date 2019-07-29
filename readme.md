@@ -1,7 +1,7 @@
 # Sample laravel project
 This project includes a docker container based on `php-apache` image.
 
-It is under development, So I've mounted the source code from host to the container. On production environment you should remove these volumes.
+It is under development, So the source code is mounted from the host to the container. On the production environment you should remove these volumes.
 
 ## Installation guide
 Follow these steps to simply run the project.
@@ -9,7 +9,7 @@ Follow these steps to simply run the project.
 ### Clone the project
 Clone this repository to your local machine using the following command
 ```bash
-git clone 
+git clone git@github.com:majidakbari/takeaway.git
 ```
 
 ### Environment variables
@@ -39,9 +39,9 @@ docker-compose exec --user www-data app bootup
 
 ## API Documentation
 In the root of the project there is a postman collection which contains the API doc.
-Also you can find the API documentation in the following address.
+Also you can find the API documentation on the following address.
 
-[API Documentation]()
+[API Documentation](https://documenter.getpostman.com/view/1493779/SVYkvgNX)
 
 ## Tests
 To run tests, in the terminal type the following command:
